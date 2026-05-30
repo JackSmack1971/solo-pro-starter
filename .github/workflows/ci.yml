@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Scaffold Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify core scaffold paths
+        run: |
+          missing=()
+          for path in \
+            .claude/settings.json \
+            .claude/CLAUDE.md \
+            .claude/rules \
+            .claude/skills \
+            .claude/agents \
+            .claude/commands \
+            CLAUDE.md \
+            AGENTS.md \
+            README.md \
+            CHANGELOG.md \
+            assets/banner.jpg; do
+            if [ ! -e "$path" ]; then
+              echo "MISSING: $path"
+              missing+=("$path")
+            else
+              echo "OK: $path"
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "ERROR: ${#missing[@]} required path(s) missing from scaffold."
+            exit 1
+          fi
+          echo ""
+          echo "All required scaffold paths present."
+
+      - name: Validate settings.json syntax
+        run: |
+          python3 -c "
+          import json, sys
+          with open('.claude/settings.json') as f:
+            try:
+              json.load(f)
+              print('OK: .claude/settings.json is valid JSON')
+            except json.JSONDecodeError as e:
+              print(f'ERROR: .claude/settings.json is invalid JSON: {e}')
+              sys.exit(1)
+          "
+
+      - name: Verify rules completeness
+        run: |
+          expected_rules=(
+            architecture
+            security
+            testing
+            frontend-wallets
+            smart-contracts
+            chain-config
+            generated-artifacts
+            github-release-workflows
+            transaction-execution
+            onchain-data-consistency
+            upgrade-admin-surfaces
+            signatures-and-permits
+          )
+          missing=()
+          for rule in "${expected_rules[@]}"; do
+            if [ ! -f ".claude/rules/${rule}.md" ]; then
+              echo "MISSING rule: .claude/rules/${rule}.md"
+              missing+=("$rule")
+            else
+              echo "OK rule: ${rule}.md"
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "ERROR: ${#missing[@]} rule file(s) missing."
+            exit 1
+          fi
+          echo ""
+          echo "All 12 rule files present."
+
+      - name: Verify skills completeness
+        run: |
+          expected_skills=(
+            stack-detection
+            auditing-wallet-flows
+            auditing-contract-surfaces
+            verifying-deployment-safety
+            dependency-audit
+            repo-audit
+            fsv-verify
+            generating-github-readmes
+          )
+          missing=()
+          for skill in "${expected_skills[@]}"; do
+            if [ ! -f ".claude/skills/${skill}/SKILL.md" ]; then
+              echo "MISSING skill: .claude/skills/${skill}/SKILL.md"
+              missing+=("$skill")
+            else
+              echo "OK skill: ${skill}"
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "ERROR: ${#missing[@]} skill(s) missing."
+            exit 1
+          fi
+          echo ""
+          echo "All 8 skills present."
+
+      - name: Verify agents completeness
+        run: |
+          expected_agents=(
+            implementation-agent
+            pr-reviewer
+            release-gatekeeper
+            upstream-auditor
+            web3-auditor
+          )
+          missing=()
+          for agent in "${expected_agents[@]}"; do
+            if [ ! -f ".claude/agents/${agent}.md" ]; then
+              echo "MISSING agent: .claude/agents/${agent}.md"
+              missing+=("$agent")
+            else
+              echo "OK agent: ${agent}.md"
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "ERROR: ${#missing[@]} agent(s) missing."
+            exit 1
+          fi
+          echo ""
+          echo "All 5 agents present."
+
+      - name: Check README minimum quality
+        run: |
+          lines=$(wc -l < README.md)
+          echo "README.md line count: $lines"
+          if [ "$lines" -lt 60 ]; then
+            echo "ERROR: README.md has fewer than 60 lines ($lines). Likely a stub."
+            exit 1
+          fi
+          if ! grep -q "## Quickstart" README.md; then
+            echo "ERROR: README.md missing Quickstart section."
+            exit 1
+          fi
+          if ! grep -q "## Developer Command Center" README.md; then
+            echo "ERROR: README.md missing Developer Command Center section."
+            exit 1
+          fi
+          echo "OK: README.md passes minimum quality checks."
+
+      - name: Check for accidentally tracked secrets
+        run: |
+          if git ls-files | grep -qE '\.env($|\.)'; then
+            echo "ERROR: .env file is tracked by git."
+            exit 1
+          fi
+          echo "OK: No .env files tracked."
