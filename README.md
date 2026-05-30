@@ -3,7 +3,6 @@
 <!--
 ASSUMPTION BLOCK — review before publishing
 [INFERRED] License: MIT assumed; no LICENSE file found. Replace the SPDX identifier and badge if different.
-[INFERRED] GitHub coordinates: REPO_OWNER/REPO_NAME throughout. Replace with actual GitHub username and repo name.
 [INFERRED] Install command: git clone workflow inferred; no package.json or build manifest present.
 [INFERRED] Primary language: TypeScript inferred from framework target audience; no source files in repo root.
 [INFERRED] Roadmap items derived from directory structure, not a tracked roadmap file.
@@ -11,15 +10,13 @@ ASSUMPTION BLOCK — review before publishing
 -->
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Build](https://img.shields.io/github/actions/workflow/status/REPO_OWNER/REPO_NAME/ci.yml?label=build)](https://github.com/REPO_OWNER/REPO_NAME/actions)
-[![Release](https://img.shields.io/github/v/release/REPO_OWNER/REPO_NAME)](https://github.com/REPO_OWNER/REPO_NAME/releases)
+[![Build](https://img.shields.io/github/actions/workflow/status/JackSmack1971/solo-pro-starter/ci.yml?label=build)](https://github.com/JackSmack1971/solo-pro-starter/actions)
+[![Release](https://img.shields.io/github/v/release/JackSmack1971/solo-pro-starter)](https://github.com/JackSmack1971/solo-pro-starter/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-<!-- Hero banner — replace src with a real screenshot or banner image, or delete this block -->
 <p align="center">
-  <img src="./assets/solo-pro-starter-banner.png" 
-       alt="solo-pro-starter banner – Claude Code Framework for Solo Ethereum dApps" 
-       width="700"/>
+  <img src="assets/banner.jpg"
+       alt="solo-pro-starter — Claude Code Framework for Solo Ethereum dApps" width="700"/>
 </p>
 
 **A Claude Code-native scaffold that gives solo developers a disciplined, issue-driven workflow for building full-stack TypeScript Ethereum dapps.**
@@ -53,7 +50,7 @@ ASSUMPTION BLOCK — review before publishing
 
 ```bash
 # Clone the scaffold into a new project directory
-git clone https://github.com/REPO_OWNER/REPO_NAME my-dapp
+git clone https://github.com/JackSmack1971/solo-pro-starter my-dapp
 
 # — OR — copy only the .claude/ directory into an existing repository
 cp -r solo-pro-starter/.claude/ my-existing-dapp/.claude/
@@ -139,10 +136,10 @@ Skills are repeatable procedures invoked on demand. Each skill is a scoped promp
 
 ```mermaid
 graph LR
-    A["Developer + Claude Code CLI"] --> B["Commands & Skills\n.claude/commands/ .claude/skills/"]
+    A["Developer + Claude Code CLI"] --> B["Commands and Skills\n.claude/commands/ .claude/skills/"]
     B --> C["Rules Engine\n.claude/rules/"]
     C --> D["Hooks Lifecycle\n.claude/hooks/"]
-    D --> E["Repository + Chain\nTypeScript dapp · viem · on-chain state"]
+    D --> E["Repository + Chain\nTypeScript dapp, viem, on-chain state"]
 ```
 
 **Component roles:**
@@ -158,11 +155,11 @@ graph LR
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
-- **Bug reports:** [Open an issue](https://github.com/REPO_OWNER/REPO_NAME/issues/new?labels=bug)
-- **First contribution?** Look for [`good first issue`](https://github.com/REPO_OWNER/REPO_NAME/labels/good%20first%20issue) labels — these are scoped to single files or small additions.
-- **Questions?** Start a [discussion](https://github.com/REPO_OWNER/REPO_NAME/discussions).
+- **Bug reports:** [Open an issue](https://github.com/JackSmack1971/solo-pro-starter/issues/new?labels=bug)
+- **First contribution?** Look for [`good first issue`](https://github.com/JackSmack1971/solo-pro-starter/labels/good%20first%20issue) labels — these are scoped to single files or small additions.
+- **Questions?** Start a [discussion](https://github.com/JackSmack1971/solo-pro-starter/discussions).
 
-> **High-risk areas:** Changes to `.claude/rules/`, `.claude/skills/`, `.claude/agents/`, or `settings.json` are treated as privileged and require a PR with a verification section that shows the change was tested.
+> **High-risk areas:** Changes to `.claude/rules/`, `.claude/skills/`, `.claude/agents/`, or `settings.json` are treated as privileged and require a PR with a verification section showing the change was tested.
 
 ---
 
@@ -184,7 +181,6 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for full guide
 | Lifecycle hook scripts (`session-start.js`, `pre-tool-use.js`, `post-tool-use.js`, `stop.js`) | 🚧 In Progress |
 | Output style overlays for structured audit report formatting | 📋 Planned |
 | Agent memory scaffolding (`agent-memory/`, `agent-memory-local/`) | 📋 Planned |
-| Figma design-to-code skill for frontend component generation | 📋 Planned |
 
 ---
 
