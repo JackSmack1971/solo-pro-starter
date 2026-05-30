@@ -17,8 +17,9 @@ ASSUMPTION BLOCK — review before publishing
 
 <!-- Hero banner — replace src with a real screenshot or banner image, or delete this block -->
 <p align="center">
-  <img src="https://via.placeholder.com/700x140?text=solo-pro-starter"
-       alt="solo-pro-starter banner" width="700"/>
+  <img src="./assets/solo-pro-starter-banner.png" 
+       alt="solo-pro-starter banner – Claude Code Framework for Solo Ethereum dApps" 
+       width="700"/>
 </p>
 
 **A Claude Code-native scaffold that gives solo developers a disciplined, issue-driven workflow for building full-stack TypeScript Ethereum dapps.**
