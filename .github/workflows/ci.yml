@@ -6,14 +6,25 @@ on:
   pull_request:
     branches: [main]
 
+# Least-privilege: global read-only; escalate per-job only if needed
+permissions:
+  contents: read
+
+# Cancel redundant runs on the same branch/PR on rapid push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     name: Scaffold Integrity
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        # actions/checkout v4.2.2 — pinned to immutable SHA (playbook §CI security)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Verify core scaffold paths
         run: |
@@ -25,6 +36,10 @@ jobs:
             .claude/skills \
             .claude/agents \
             .claude/commands \
+            .github/SECURITY.md \
+            .github/CONTRIBUTING.md \
+            .github/CODEOWNERS \
+            .github/pull_request_template.md \
             CLAUDE.md \
             AGENTS.md \
             README.md \
@@ -57,6 +72,18 @@ jobs:
               print(f'ERROR: .claude/settings.json is invalid JSON: {e}')
               sys.exit(1)
           "
+
+      - name: Validate ISSUE_TEMPLATE config
+        run: |
+          if [ ! -f ".github/ISSUE_TEMPLATE/config.yml" ]; then
+            echo "ERROR: .github/ISSUE_TEMPLATE/config.yml missing."
+            exit 1
+          fi
+          if ! grep -q "blank_issues_enabled: false" .github/ISSUE_TEMPLATE/config.yml; then
+            echo "ERROR: blank_issues_enabled is not set to false."
+            exit 1
+          fi
+          echo "OK: Issue template config enforces structured templates."
 
       - name: Verify rules completeness
         run: |

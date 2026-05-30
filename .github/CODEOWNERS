@@ -1,0 +1,24 @@
+# CODEOWNERS — solo-pro-starter
+# Last-matching pattern wins (gitignore-style precedence, top-to-bottom).
+# Negation (!) and character ranges ([]) are not supported.
+
+# Default: all paths owned by the maintainer
+* @JackSmack1971
+
+# Privileged: CI/CD and workflow changes — highest blast radius
+/.github/workflows/ @JackSmack1971
+
+# Privileged: security policy
+/.github/SECURITY.md @JackSmack1971
+
+# Privileged: permission settings, hooks, and model config
+/.claude/settings.json @JackSmack1971
+
+# Privileged: rules — path-scoped constraints that load automatically
+/.claude/rules/ @JackSmack1971
+
+# Privileged: skill scripts — shell execution surface
+/.claude/skills/ @JackSmack1971
+
+# Privileged: agent role definitions — affect autonomous behavior
+/.claude/agents/ @JackSmack1971

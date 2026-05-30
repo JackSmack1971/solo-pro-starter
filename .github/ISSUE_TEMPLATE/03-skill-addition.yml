@@ -1,0 +1,88 @@
+name: "Skill Addition Proposal"
+description: "Propose a new reusable skill for the `.claude/skills/` directory with a fully scoped specification."
+title: "skill: "
+labels: ["skill", "enhancement"]
+assignees: ["JackSmack1971"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for new skill proposals. A skill must have a clear trigger condition, defined scope, and at least one reference file. See existing skills in `.claude/skills/` for examples.
+
+  - type: input
+    id: skill-name
+    attributes:
+      label: Skill Name (kebab-case)
+      placeholder: "e.g., auditing-gas-usage"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: One-Line Description
+      description: This becomes the `description:` field in SKILL.md frontmatter. Must clearly state when to trigger the skill.
+      placeholder: "Audit gas usage patterns in Solidity contracts and viem call sites. Use when optimizing contract write paths or diagnosing unexpectedly high transaction costs."
+    validations:
+      required: true
+
+  - type: textarea
+    id: trigger-condition
+    attributes:
+      label: Trigger Condition
+      description: Exactly when should Claude invoke this skill? Be specific about file types, task types, or keywords.
+      placeholder: "Trigger when: user mentions gas, transaction cost, or optimization; contract files change; evm-dapp skill is active and forge test output shows high gas usage."
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-it-checks
+    attributes:
+      label: What It Checks / Produces
+      description: List the concrete outputs or checks the skill performs.
+      placeholder: |
+        - Identifies functions exceeding 100k gas in forge snapshot
+        - Flags unbounded loops and dynamic storage reads in hot paths
+        - Suggests viem `estimateGas` integration points
+        - Outputs a ranked table: function → estimated gas → recommendation
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference-files
+    attributes:
+      label: Reference Files Needed
+      description: List any reference Markdown files the skill should load (e.g., gas-optimization-patterns.md).
+    validations:
+      required: false
+
+  - type: textarea
+    id: scripts
+    attributes:
+      label: Scripts Needed
+      description: List any shell scripts the skill should execute (e.g., run-gas-snapshot.sh).
+    validations:
+      required: false
+
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk Level
+      options:
+        - "Low — read-only analysis skill"
+        - "Medium — modifies files or runs forge/pnpm commands"
+        - "High — touches contract deployment, signing, or settings"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight Checklist
+      options:
+        - label: No existing skill covers this use case (checked `.claude/skills/` and README).
+          required: true
+        - label: The skill is scoped to the Claude Code scaffold context, not general programming advice.
+          required: true
+        - label: I can contribute the SKILL.md and at least one reference file if accepted.
+          required: false

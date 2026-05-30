@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General Questions & Discussions
+    url: https://github.com/JackSmack1971/solo-pro-starter/discussions
+    about: Ask usage questions and discuss ideas here before opening a formal issue.
+  - name: Troubleshooting Matrix
+    url: https://github.com/JackSmack1971/solo-pro-starter#troubleshooting-matrix
+    about: Check common problems and fixes in the README before filing a bug.
+  - name: Security Vulnerability
+    url: https://github.com/JackSmack1971/solo-pro-starter/security/advisories/new
+    about: Report security issues privately — do not open a public issue.

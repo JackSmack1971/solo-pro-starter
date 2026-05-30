@@ -1,0 +1,73 @@
+name: "Feature Request"
+description: "Propose an improvement to an existing skill, rule, agent, command, or workflow — or suggest a new one."
+title: "feat: "
+labels: ["enhancement"]
+assignees: ["JackSmack1971"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature requests that include a clear problem statement and a concrete implementation sketch are prioritized. Vague requests may be closed without action.
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: Request Type
+      options:
+        - "New skill"
+        - "New rule"
+        - "New agent"
+        - "New slash command"
+        - "Improvement to existing skill / rule / agent"
+        - "CI / workflow improvement"
+        - "Documentation improvement"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What gap or friction does this address in the solo Ethereum dApp workflow?
+      placeholder: "When I try to do X, I have to Y manually every time because the scaffold doesn't..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the change. For a new skill, outline the trigger condition, what it checks, and expected output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What else did you consider? Why is this approach better?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: risk-level
+    attributes:
+      label: Risk Level
+      description: How much could this change affect existing scaffold behavior?
+      options:
+        - "Low — additive only, no existing behavior changes"
+        - "Medium — modifies an existing skill, rule, or agent"
+        - "High — changes settings.json, hooks, or CI workflow"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight Checklist
+      options:
+        - label: I have searched existing issues and discussions — this is not a duplicate.
+          required: true
+        - label: This feature fits within the scope of the scaffold (Claude Code configuration, not application code).
+          required: true
