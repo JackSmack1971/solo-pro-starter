@@ -94,6 +94,7 @@ jobs:
       - name: Verify skills completeness
         run: |
           expected_skills=(
+            evm-dapp
             stack-detection
             auditing-wallet-flows
             auditing-contract-surfaces
@@ -118,7 +119,7 @@ jobs:
             exit 1
           fi
           echo ""
-          echo "All 8 skills present."
+          echo "All 9 skills present."
 
       - name: Verify agents completeness
         run: |

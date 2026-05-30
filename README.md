@@ -90,6 +90,7 @@ ls .claude/settings.json .claude/rules/ .claude/skills/ .claude/agents/ .claude/
 
 | Skill | When to Invoke | What It Checks |
 |---|---|---|
+| `/evm-dapp` | When writing Solidity, configuring wagmi/viem, generating ethers adapters, or scaffolding a dApp monorepo | Stack compliance (viem-first), BigNumber usage, address typing, ABI export pipeline, forge test + tsc gates |
 | `/stack-detection` | Before any architectural or client-layer change | Classifies repo as viem-first, ethers v6-first, or mixed |
 | `/auditing-wallet-flows` | When wallet connect, signing, or transaction UX changes | Connect state, network switching, rejection handling, pending states |
 | `/auditing-contract-surfaces` | When ABI, address, or write-path code changes | ABI drift, address management, generated artifact sync, revert paths |
@@ -97,6 +98,7 @@ ls .claude/settings.json .claude/rules/ .claude/skills/ .claude/agents/ .claude/
 | `/dependency-audit` | When adding or upgrading packages | Lockfile drift, duplicate web3 stacks, supply-chain risk |
 | `/repo-audit` | For a broad synthesis pass | Composes focused skills; produces one finding per confirmed issue |
 | `/fsv-verify` | After every write or external mutation | Confirms expected state; blocks stopping until condition holds |
+| `/generating-github-readmes` | When creating or upgrading a project README | BRAID pipeline: context extraction, structure assessment, 11-section generation, validation gate |
 
 </details>
 
@@ -129,7 +131,7 @@ ls .claude/settings.json .claude/rules/ .claude/skills/ .claude/agents/ .claude/
 ## Features
 
 - **12 focused rules** — covers architecture, security, testing, frontend wallets, smart contracts, chain config, generated artifacts, transaction execution, on-chain data consistency, upgrade/admin surfaces, signatures and permits, and GitHub release workflows. Rules are path-scoped so only relevant ones load for each task.
-- **7 reusable skills** — stack detection, wallet-flow audit, contract-surface audit, deployment safety verification, dependency audit, repo audit, and full-state verification (`fsv-verify`).
+- **9 reusable skills** — EVM full-stack development (`evm-dapp`), stack detection, wallet-flow audit, contract-surface audit, deployment safety verification, dependency audit, repo audit, full-state verification (`fsv-verify`), and README generation.
 - **5 specialized subagents** — implementation agent, PR reviewer, release gatekeeper, upstream auditor, and web3 auditor; each isolated to a single responsibility and invoked by Claude Code automatically.
 - **Namespaced slash commands** — `create:pr`, `review:pr`, `audit:upstream`, `audit:web3`, `release:readiness` with legacy top-level aliases retained for backward compatibility.
 - **Lifecycle hooks** — `SessionStart`, `PreToolUse`, `PostToolUse`, and `Stop` hooks run shell scripts automatically so guardrails fire without manual prompting.
@@ -203,6 +205,7 @@ graph LR
 │   ├── auditing-contract-surfaces/
 │   ├── auditing-wallet-flows/
 │   ├── dependency-audit/
+│   ├── evm-dapp/                          # viem-first EVM full-stack policy (Foundry + wagmi + Next.js)
 │   ├── fsv-verify/
 │   ├── generating-github-readmes/
 │   ├── repo-audit/
